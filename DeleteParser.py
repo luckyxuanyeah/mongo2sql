@@ -16,13 +16,13 @@ class DeleteParser(Parser):
         if re.match(regular_expression, string_need_parse) == None:
             raise ValueError("input error")
         else:
-			#输入正常开始解析
+	    #输入正常开始解析
             string_array = string_need_parse.split(".")#db, dbname, operation, json_part, maybehaveone
 
             dbname = string_array[1]
             operation, json_part = string_array[2].split("(")
 
-		    #得到中间的{ age: { $lt: 925 } }
+            #得到中间的{ age: { $lt: 925 } }
             json_part = json_part[:-1] #去掉结尾的括号
 
             #json部分是两个，一个或者零个json对象分别处理
@@ -42,8 +42,7 @@ class DeleteParser(Parser):
                 where_dic = json_object[0]
                 self.parse_where_dic(where_dic)
                 return self.format_Sql(dbname, operation, where_dic=where_dic)
-
-    #sql = "DELETE" 
+	
     def format_Sql(self, dbname, operation, where_dic=None):
         global sql
         sql = "DELETE" 
@@ -51,8 +50,6 @@ class DeleteParser(Parser):
         sql = sql+ " FROM " + dbname
         #有WHERE部分的处理
         if len(where_dic.keys()) != 0:
-            
-            print(where_dic.keys())
             sql += " WHERE "
             for key in where_dic.keys():
                 #首先处理or情况
